@@ -67,3 +67,9 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+  hive:
+    image: ruili2/hive:latest
+    depends_on:
+      - jobmanager
+    environment:
+      FLINK_JOBMANAGER_HOST: jobmanager

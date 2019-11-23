@@ -4,7 +4,8 @@ from pyflink.table import StreamTableEnvironment, DataTypes, EnvironmentSettings
 from pyflink.table.descriptors import Schema, Kafka, Json, Rowtime
 
 
-def from_kafka_to_kafka_demo():
+# 写一个查询找出 ride `123` 的上下车事件记录。
+def find_ride_id():
     s_env = StreamExecutionEnvironment.get_execution_environment()
     s_env.set_stream_time_characteristic(TimeCharacteristic.EventTime)
     s_env.set_parallelism(1)
@@ -20,11 +21,14 @@ def from_kafka_to_kafka_demo():
     register_rides_source(st_env)
     register_rides_sink(st_env)
 
-    # query
-    st_env.from_path("source").select("*").insert_into("sink")
+    # query, 将下面的？？？替换成正确的query
+    st_env\
+        .from_path("source")\
+        .where("rideId=123")\
+        .insert_into("sink")
 
     # execute
-    st_env.execute("from_kafka_to_kafka")
+    st_env.execute("find_ride_id")
 
 
 def register_rides_source(st_env):
@@ -98,4 +102,4 @@ def register_rides_sink(st_env):
 
 
 if __name__ == '__main__':
-    from_kafka_to_kafka_demo()
+    find_ride_id()

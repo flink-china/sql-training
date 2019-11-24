@@ -24,7 +24,7 @@ def find_ride_id():
     # query, 将下面的？？？替换成正确的query
     st_env\
         .from_path("source")\
-        .where("rideId=123")\
+        .???\
         .insert_into("sink")
 
     # execute

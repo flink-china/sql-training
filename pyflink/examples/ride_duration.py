@@ -2,6 +2,7 @@
 from pyflink.datastream import StreamExecutionEnvironment, TimeCharacteristic
 from pyflink.table import StreamTableEnvironment, DataTypes, EnvironmentSettings
 from pyflink.table.descriptors import Schema, Kafka, Json, Rowtime
+from pyflink.table.udf import udf
 
 
 def ride_duration():
@@ -20,9 +21,10 @@ def ride_duration():
     register_rides_source(st_env)
     register_ride_duration_sink(st_env)
 
-    # register java udf (toAreaId)
+    # register java udf (isInNYC, timeDiff)
+    # 注：timeDiff对应类的路径是：com.ververica.sql_training.udfs.TimeDiff
     st_env.register_java_function("isInNYC", "com.ververica.sql_training.udfs.IsInNYC")
-    st_env.register_java_function("timeDiff", "com.ververica.sql_training.udfs.TimeDiff")
+    ？？？ #注册timeDiff函数
 
     # query
     source_table = st_env.from_path("Rides")
@@ -37,7 +39,7 @@ def ride_duration():
 
     left_table.join(right_table,
                     "startRideId == endRideId && endRideTime.between(startRideTime, startRideTime + 2.hours) ")\
-        .select("startRideId as rideId, timeDiff(startRideTime, endRideTime)/60000 as durationMin")\
+        .select("？？？")\
         .insert_into("TempResults")
 
     # execute

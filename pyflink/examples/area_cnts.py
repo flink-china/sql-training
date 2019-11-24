@@ -26,8 +26,8 @@ def area_cnts():
     # query
     st_env.from_path("source")\
         .add_columns("toAreaId(lon, lat) as areaId")\
-        .group_by("areaId")\
-        .select("areaId, count(1)")\
+        .group_by("???")\
+        .select("???")\
         .insert_into("sink")
 
     # execute
@@ -81,8 +81,8 @@ def register_cnt_sink(st_env):
             .key_delimiter("$")) \
         .with_schema(
             Schema()
-                .field("areaId", DataTypes.INT())
-                .field("cnt", DataTypes.BIGINT())) \
+                .field("???", ???)
+                .field("???", DataTypes.BIGINT())) \
         .with_format(
            Json()
                .derive_schema()) \

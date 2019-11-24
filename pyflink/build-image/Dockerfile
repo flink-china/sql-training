@@ -33,6 +33,12 @@ RUN set -ex; \
   ln -s /usr/bin/python3 /usr/bin/python; \
   ln -s /usr/bin/pip3 /usr/bin/pip
 
+# Install beam
+RUN set -ex; \
+  apt-get update; \
+  python -m pip install --upgrade pip; \
+  pip install apache-beam==2.15.0
+
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.11
 RUN set -ex; \

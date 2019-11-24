@@ -23,8 +23,19 @@ def ride_duration():
 
     # register java udf (isInNYC, timeDiff)
     # 注：timeDiff对应类的路径是：com.ververica.sql_training.udfs.TimeDiff
-    st_env.register_java_function("isInNYC", "com.ververica.sql_training.udfs.IsInNYC")
-    ？？？ #注册timeDiff函数
+    #st_env.register_java_function("isInNYC", "com.ververica.sql_training.udfs.IsInNYC")
+    st_env.register_java_function("timeDiff", "com.ververica.sql_training.udfs.TimeDiff")
+
+    #register python udf
+    @udf(input_types=[DataTypes.FLOAT(), DataTypes.FLOAT()], result_type=DataTypes.BOOLEAN())
+    def is_in_nyc(lon, lat):
+        LON_EAST = -73.7
+        LON_WEST = -74.05
+        LAT_NORTH = 41.0
+        LAT_SOUTH = 40.5
+        return not (lon > LON_EAST or lon < LON_WEST) and not (lat > LAT_NORTH or lat < LAT_SOUTH)
+
+    st_env.register_function("isInNYC", is_in_nyc)
 
     # query
     source_table = st_env.from_path("Rides")
@@ -39,7 +50,7 @@ def ride_duration():
 
     left_table.join(right_table,
                     "startRideId == endRideId && endRideTime.between(startRideTime, startRideTime + 2.hours) ")\
-        .select("？？？")\
+        .select("startRideId as rideId, timeDiff(startRideTime, endRideTime)/60000 as durationMin")\
         .insert_into("TempResults")
 
     # execute

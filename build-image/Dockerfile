@@ -64,5 +64,8 @@ RUN wget -P /opt/sql-client/lib/ http://central.maven.org/maven2/org/apache/flin
     wget -O /opt/data/fares.txt.gz 'https://drive.google.com/uc?export=download&id=1SriiwcIdMvY7uJsWSY4Hhh32iO3F4ND2'; \
     wget -O /opt/data/rides.txt.gz 'https://drive.google.com/uc?export=download&id=1gY8W07OFvB7_4lHlAyingM4WQzs0_8lT';
 
+# Copy CSV data to flink sql-client directory
+COPY csv/* /opt/sql-client
+
 WORKDIR /opt/sql-client
 ENV SQL_CLIENT_HOME /opt/sql-client

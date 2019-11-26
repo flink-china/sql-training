@@ -148,6 +148,25 @@ tables:
     primary-key: taxiId
     time-attribute: usageStartTime
 
+  # Define a dimension table here, have the same schema with DriverChanges, but it will store the full-snapshot of drivers.
+  - name: LatestDrivers
+    type: source
+    schema:
+      - name: taxiId
+        type: LONG
+      - name: driverId
+        type: LONG
+    connector:
+      type: filesystem
+      path: /opt/sql-client/latest-drivers.csv
+    format:
+      type: csv
+      fields:
+        - name: taxiId
+          type: LONG
+        - name: driverId
+          type: LONG
+
   - name: Sink_TenMinPsgCnts
     type: sink
     update-mode: append

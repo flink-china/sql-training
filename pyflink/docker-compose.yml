@@ -15,7 +15,7 @@ services:
   jobmanager:
     image: hequn8128/flink-1.10:1.10
     volumes:
-      - /Users/hequn.chq/Documents/work/code/sql-training/pyflink/examples:/opt/examples
+      - ./examples:/opt/examples
     hostname: "jobmanager"
     expose:
       - "6123"
@@ -27,7 +27,7 @@ services:
   taskmanager:
     image: hequn8128/flink-1.10:1.10
     volumes:
-      - /Users/hequn.chq/Documents/work/code/sql-training/pyflink/examples:/opt/examples
+      - ./examples:/opt/examples
     expose:
       - "6121"
       - "6122"

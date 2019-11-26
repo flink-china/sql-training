@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   sql-client:
-    image: fhueske/flink-sql-training:1-FLINK-1.9-scala_2.11
+    image: openinx/flink-sql-training:1-FLINK-1.9-scala_2.11
     command: "java -classpath /opt/data/data-producer.jar com.ververica.sql_training.data_producer.TaxiRecordProducer --input file /opt/data --output kafka kafka:9092 --speedup 10.0"
     depends_on:
       - kafka
@@ -24,6 +24,8 @@ services:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
   taskmanager:
     image: flink:1.9-scala_2.11
+    volumes:
+      - ./build-image/csv/latest-drivers.csv:/opt/sql-client/latest-drivers.csv
     expose:
       - "6121"
       - "6122"

@@ -36,7 +36,7 @@ RUN cd /opt/data-producer; \
 # Build SQL Playground Image
 ###############################################################################
 
-FROM flink:1.9.0-scala_2.11
+FROM flink:1.10-scala_2.11
 
 ADD VERSION .
 
